@@ -1,4 +1,4 @@
-package com.mohan.ai_assistant.config;
+package com.mohan.ai_assistant.infrastructure.llm;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

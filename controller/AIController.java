@@ -1,6 +1,7 @@
 package com.mohan.ai_assistant.controller;
 
-import com.mohan.ai_assistant.service.AIService;
+import com.mohan.ai_assistant.application.AIApplicationService;
+import com.mohan.ai_assistant.domain.model.PromptType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,21 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AIController {
 
-    private final AIService service;
+    private final AIApplicationService appService;
 
-    @GetMapping("/explain")
-    public String explain(@RequestParam String topic) {
-        return service.explainConcept(topic);
+    @GetMapping("/process")
+    public String process(
+            @RequestParam PromptType type,
+            @RequestParam String input
+    ) {
+        return appService.process(type, input);
     }
-
-    @GetMapping("/structured")
-    public String structured(@RequestParam String topic) {
-        return service.structuredConcept(topic);
-    }
-
-    @GetMapping("/code-review")
-    public String codeReview(@RequestParam String topic) {
-        return service.codeReviewPrompt(topic);
-    }
-
 }

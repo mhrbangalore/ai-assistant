@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handle(Exception ex) {
-        return ResponseEntity.internalServerError()
-                .body("AI Service Error: " + ex.getMessage());
+    @ExceptionHandler(AIException.class)
+    public ResponseEntity<String> handleAI(AIException ex) {
+        return ResponseEntity
+                .internalServerError()
+                .body(ex.getMessage());
     }
 }
