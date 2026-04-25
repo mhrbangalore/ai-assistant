@@ -1,5 +1,6 @@
 package com.mohan.ai_assistant.infrastructure.prompt;
 
+import com.mohan.ai_assistant.domain.model.ChatMessage;
 import com.mohan.ai_assistant.domain.model.PromptType;
 import com.mohan.ai_assistant.infrastructure.prompt.strategy.PromptStrategy;
 import org.springframework.stereotype.Component;
@@ -24,5 +25,20 @@ public class PromptFactory {
 
     public String build(PromptType type, String input) {
         return strategyMap.get(type).build(input);
+    }
+
+    public String buildWithHistory(PromptType type, List<ChatMessage> messages) {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (ChatMessage msg : messages) {
+            sb.append(msg.getRole()).append(": ").append(msg.getContent()).append("\n");
+        }
+
+        return switch (type) {
+            case EXPLAIN -> "Continue conversation:\n" + sb;
+            case CODE_REVIEW -> "Review with context:\n" + sb;
+            case SUMMARIZE -> "Summarize context:\n" + sb;
+        };
     }
 }
